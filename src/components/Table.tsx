@@ -6,6 +6,8 @@ import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import emptyBox from "../assets/animations/emptyBox.json";
+import LottieAnimation from "./LottieAnimation";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -30,40 +32,54 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 type Props = {
   headings: { id: string; name: string }[];
   rows: object[];
+  emptyText?: string;
+  id?: string | number;
+  rowId?: string | number;
 };
 
-export default function CustomizedTables({ headings, rows }: Props) {
+export default function CustomizedTables({
+  headings,
+  rows,
+  emptyText = "No data found!",
+  id = "",
+  rowId = "name"
+}: Props) {
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 700 }} aria-label="customized table">
-        <TableHead>
-          <TableRow>
-            {headings?.map((item, index) => (
-              <StyledTableCell
-                key={item?.id}
-                // align={index == 0 ? "left" : "right"}
-              >
-                <p className="font-medium text-base">{item?.name}</p>
-              </StyledTableCell>
-            ))}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.name}>
+    <>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 700 }} aria-label="customized table">
+          <TableHead>
+            <TableRow>
               {headings?.map((item, index) => (
-                <StyledTableCell
-                  component="th"
-                  scope="row"
-                  // align={index == 0 ? "left" : "right"}
-                >
-                  {row?.[item?.id] || "-"}
+                <StyledTableCell key={`${id}-${item?.id}`}>
+                  <p className="font-medium text-base">{item?.name}</p>
                 </StyledTableCell>
               ))}
-            </StyledTableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows.map((row) => (
+              <StyledTableRow key={row?.[rowId]}>
+                {headings?.map((item, index) => (
+                  <StyledTableCell component="th" scope="row" key={`${id}-${item?.id}`}>
+                    {item?.renderer
+                      ? item?.renderer(row?.[item?.id], row)
+                      : row?.[item?.id] || "-"}
+                  </StyledTableCell>
+                ))}
+              </StyledTableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      {rows?.length === 0 && headings?.length > 0 && (
+        <div
+          className="w-full h-full flex flex-col justify-center items-center "
+        >
+          <LottieAnimation animationData={emptyBox} width={300} height={300} />
+          <p className="text-lg font-medium text-gray-800">{emptyText}</p>
+        </div>
+      )}
+    </>
   );
 }

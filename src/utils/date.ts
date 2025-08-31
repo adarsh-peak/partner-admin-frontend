@@ -2,7 +2,8 @@ import moment from 'moment';
 
 export const getFormattedDate = (dateStr: string) => {
   try {
-    return moment(dateStr).format("DD MMM'YY");
+    if (dateStr) return moment(dateStr).format("D MMMM, YYYY");
+    else return "-";
   } catch (error) {
     return "";
   }

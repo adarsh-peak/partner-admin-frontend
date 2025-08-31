@@ -640,7 +640,7 @@ const createCustomTheme = (reducedDisplay = false) =>
       MuiTabs: {
         styleOverrides: {
           indicator: {
-            backgroundColor: "#6D4ABE",
+            backgroundColor: "#01a7a5",
           },
         },
       },
