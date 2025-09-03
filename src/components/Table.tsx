@@ -35,6 +35,7 @@ type Props = {
   emptyText?: string;
   id?: string | number;
   rowId?: string | number;
+  topHeadings?: object[];
 };
 
 export default function CustomizedTables({
@@ -42,26 +43,69 @@ export default function CustomizedTables({
   rows,
   emptyText = "No data found!",
   id = "",
-  rowId = "name"
+  rowId = "name",
+  topHeadings = null,
 }: Props) {
   return (
     <>
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} classes={{ root: "h-full" }}>
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <TableHead>
+            {Boolean(topHeadings) && (
+              <TableRow>
+                {topHeadings?.map((item) => (
+                  <StyledTableCell
+                    key={`${id}-${item?.id}`}
+                    colSpan={item?.colSpan}
+                    sx={{
+                      position: "sticky",
+                      top: 0,
+                      backgroundColor: "white", // must set background!
+                      zIndex: 1,
+                    }}
+                  >
+                    <p
+                      className={`font-medium text-base text-${
+                        item?.align || "left"
+                      }`}
+                    >
+                      {item?.name}
+                    </p>
+                  </StyledTableCell>
+                ))}
+              </TableRow>
+            )}
             <TableRow>
               {headings?.map((item, index) => (
-                <StyledTableCell key={`${id}-${item?.id}`}>
-                  <p className="font-medium text-base">{item?.name}</p>
+                <StyledTableCell
+                  key={`${id}-${item?.id}`}
+                  sx={{
+                    position: "sticky",
+                    top: 0,
+                    backgroundColor: "white",
+                    zIndex: 1,
+                  }}
+                >
+                  <p
+                    className={`font-medium text-base text-${
+                      item?.align || "left"
+                    }`}
+                  >
+                    {item?.name}
+                  </p>
                 </StyledTableCell>
               ))}
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody className="overflow-scroll">
             {rows.map((row) => (
               <StyledTableRow key={row?.[rowId]}>
                 {headings?.map((item, index) => (
-                  <StyledTableCell component="th" scope="row" key={`${id}-${item?.id}`}>
+                  <StyledTableCell
+                    component="th"
+                    scope="row"
+                    key={`${id}-${item?.id}`}
+                  >
                     {item?.renderer
                       ? item?.renderer(row?.[item?.id], row)
                       : row?.[item?.id] || "-"}
@@ -73,9 +117,7 @@ export default function CustomizedTables({
         </Table>
       </TableContainer>
       {rows?.length === 0 && headings?.length > 0 && (
-        <div
-          className="w-full h-full flex flex-col justify-center items-center "
-        >
+        <div className="w-full h-full flex flex-col justify-center items-center ">
           <LottieAnimation animationData={emptyBox} width={300} height={300} />
           <p className="text-lg font-medium text-gray-800">{emptyText}</p>
         </div>

@@ -90,10 +90,10 @@ async function getData(endUrl, config, apiUrl) {
   return await instance.get(url, config);
 }
 
-// postData(endUrl, data, config, apiUrl) {
-//   let url = apiUrl ? apiUrl : `${baseUrl}${endUrl}`;
-//   return instance.post(url, data, config);
-// },
+async function postData(endUrl, data, config, apiUrl) {
+  let url = apiUrl ? apiUrl : `${baseUrl}${endUrl}`;
+  return instance.post(url, data, config);
+}
 // putData(endUrl, data, config, apiUrl) {
 //   let url = apiUrl ? apiUrl : `${baseUrl}${endUrl}`;
 //   return instance.put(url, data, config);
@@ -107,7 +107,8 @@ async function getData(endUrl, config, apiUrl) {
 //   return instance.delete(url, data, config);
 // },
 const api = {
-  getData
+  getData,
+  postData
 };
 
 export default api;

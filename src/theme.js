@@ -601,6 +601,15 @@ const createCustomTheme = (reducedDisplay = false) =>
           },
         },
       },
+      MuiModal: {
+        styleOverrides: {
+          root: {
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center"
+          },
+        },
+      },
       MuiSwitch: {
         variants: [
           {

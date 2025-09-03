@@ -46,3 +46,7 @@ export const getRedirectUrlFromLatestReportFinancialStatement = (financialStatme
   else return `financial_statement?mid=${MailingID}`;
 }
 
+export const isNullOrUndefined = (val: any) => {
+  if (val === undefined || val === null) return true;
+  return false;
+}

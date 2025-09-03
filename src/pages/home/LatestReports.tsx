@@ -14,7 +14,10 @@ type Props = {
   objConsenterListRS: unknown[];
   bitDisplayFStmt: boolean;
   HasLPK1Consent: boolean;
+  currentLPK1Consent: boolean;
   IsConsenter: boolean;
+  onHasLPK1ConsentChange: (val: boolean) => void;
+  onSubmit: () => void;
 };
 
 const TABS = [
@@ -38,10 +41,13 @@ const LatestReports = ({
   IsConsenter,
   objConsentersCompanyListRS = [],
   objConsenterListRS = [],
+  onHasLPK1ConsentChange,
+  onSubmit,
+  currentLPK1Consent
 }: Props) => {
-  const consentDisclosureStatement = import.meta.env.VITE_K1_CONSENT_DISCLOSURE_STATEMENT;
+  const consentDisclosureStatement = import.meta.env
+    .VITE_K1_CONSENT_DISCLOSURE_STATEMENT;
   const [tabIndex, setTabIndex] = useState<number>(0);
-  
 
   const financialTableData = useMemo(() => {
     const headings = [
@@ -105,7 +111,7 @@ const LatestReports = ({
         />
       );
     } else {
-      if (HasLPK1Consent) {
+      if (currentLPK1Consent) {
         return (
           <CustomizedTables
             headings={k1TableData.headings || []}
@@ -185,22 +191,25 @@ const LatestReports = ({
                   <p key={index}>{item?.["CompanyName"]}</p>
                 ))}
                 <div className="flex items-center mt-2 w-fit text-left m-auto  mb-4">
-                  <Checkbox checked={HasLPK1Consent} />
+                  <Checkbox
+                    checked={HasLPK1Consent}
+                    onChange={(_, checked) => onHasLPK1ConsentChange(checked)}
+                  />
                   <p className="ml-2">
                     Yes, I consent to receive electronic K-1s for the Limited
                     Partners listed above.
                   </p>
                 </div>
-                <Button variant="primary-v2">
-                  Submit
-                </Button>
+                <Button variant="primary-v2" onClick={onSubmit}>Submit</Button>
               </div>
             ) : (
               <div className="w-[60%] mx-auto h-fit">
                 <p>Authorized consenters</p>
                 {objConsenterListRS?.length == 0 && <p>No consenters"</p>}
                 {objConsenterListRS?.map((item, index) => (
-                  <p className="my-1" key={index}>{item?.["ContactName"]}</p>
+                  <p className="my-1" key={index}>
+                    {item?.["ContactName"]}
+                  </p>
                 ))}
               </div>
             )}

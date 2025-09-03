@@ -17,10 +17,12 @@ type Props = {
 const Home = ({ activeLeftMenuTabId }: Props) => {
   const [data, setData] = useState(null);
   const [activeTabId, setActiveTabId] = useState<string>("reminder");
+  const [HasLPK1Consent, setHasLPK1Consent] = useState<boolean>(false);
 
   async function getHomeData() {
     const homeData = await api.getData("home");
     setData(homeData?.data);
+    setHasLPK1Consent(homeData?.data?.HasLPK1Consent);
   }
 
   useEffect(() => {
@@ -114,6 +116,16 @@ const Home = ({ activeLeftMenuTabId }: Props) => {
     }
   };
 
+  const onHasLPK1ConsentChange = async (val: boolean) => {
+    if (!HasLPK1Consent) return;
+    await api.postData("home/processk1consent", {
+      "CompanyID": data?.consentViewModel?.objConsenterRS?.[0]?.CompanyID,
+      "ContactID": data?.consentViewModel?.objConsenterRS?.[0]?.ContactID,
+      "RoleID": data?.consentViewModel?.objConsenterRS?.[0]?.RoleID
+    })
+    setData({ ...data, HasLPK1Consent: true });
+  }
+
   return (
     <div className="flex flex-col h-screen">
       <Header activeTabId={activeLeftMenuTabId} />
@@ -139,7 +151,10 @@ const Home = ({ activeLeftMenuTabId }: Props) => {
               objSCGEK1RS={data?.objSCGEK1RS}
               bitDisplayFStmt={data?.bitDisplayFStmt}
               objFileRS={data?.objFileRS}
-              HasLPK1Consent={data?.HasLPK1Consent}
+              currentLPK1Consent={data?.HasLPK1Consent}
+              HasLPK1Consent={HasLPK1Consent}
+              onHasLPK1ConsentChange={(val) => setHasLPK1Consent(val)}
+              onSubmit={onHasLPK1ConsentChange}
               IsConsenter={data?.consentViewModel?.IsConsenter}
               objConsentersCompanyListRS={data?.consentViewModel?.objConsentersCompanyListRS}
               objConsenterListRS={data?.consentViewModel?.objConsenterListRS}

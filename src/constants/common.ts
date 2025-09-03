@@ -20,7 +20,7 @@ import reportLogo from '../assets/report.svg';
 
 export const LEFT_MENU = [
   {
-    id: "relation",
+    id: "dashboard",
     name: "Dashboard",
     activeIcon: gaugeActiveIcon,
     icon: gaugeIcon,

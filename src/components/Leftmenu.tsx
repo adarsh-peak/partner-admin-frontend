@@ -1,6 +1,7 @@
-import { Button, IconButton } from "@mui/material";
-import peakLogo from "../assets/logo.svg";
+import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import logoutLogo from "../assets/active/logout.svg";
+import peakLogo from "../assets/logo.svg";
 import { LEFT_MENU } from "../constants/common";
 
 type Props = {
@@ -9,6 +10,7 @@ type Props = {
 };
 
 const Leftmenu = ({ activeTabId, setActiveTabId }: Props) => {
+  const navigate = useNavigate();
   return (
     <section className="w-[260px] min-w-[260px] border-r-[1px] border-gray-300 flex flex-col justify-between">
       <div className="flex items-center justify-left border-b-[1px] border-gray-300 p-4">
@@ -26,7 +28,10 @@ const Leftmenu = ({ activeTabId, setActiveTabId }: Props) => {
             className={`flex items-center mb-4 p-4 rounded-md cursor-pointer ${
               activeTabId === item?.id ? "bg-[#f2fbfb] text-[#01a7a5]" : ""
             }`}
-            onClick={() => setActiveTabId(item?.id)}
+            onClick={() => {
+              setActiveTabId(item?.id)
+              navigate(item?.id);
+            }}
           >
             <img
               src={activeTabId === item?.id ? item.activeIcon : item.icon}
