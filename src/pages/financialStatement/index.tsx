@@ -93,6 +93,15 @@ const FinancialStatement = ({ activeLeftMenuTabId }: Props) => {
       });
     });
 
+    if (quaterlyReports?.SummaryFStmtRS?.length > 0) {
+      rows.push({
+        Fund: "All Partnerships",
+        Period: getPeriodFromEventDate(quaterlyReports?.SummaryFStmtRS?.EventDate),
+        Type: "Quaterly Report",
+        EventDate: getFormattedDate(quaterlyReports?.SummaryFStmtRS?.EventDate),
+      });
+    }
+
     return rows;
   };
 
@@ -165,7 +174,7 @@ const FinancialStatement = ({ activeLeftMenuTabId }: Props) => {
         heading={`${openModal?.data?.Type} - ${openModal?.data?.Fund}`}
         onClose={() => setOpenModal({open: false})}
       >
-          <QuaterlyReportsTable data={openModal?.data} />
+          <QuaterlyReportsTable data={openModal?.data} quaterlyReports={quaterlyReports} />
       </Modal>
     </div>
   );

@@ -14,9 +14,9 @@ import gaugeActiveIcon from "../assets/active/gauge.svg";
 import phoneActiveIcon from "../assets/active/phone.svg";
 import recieptActiveIcon from "../assets/active/reciept.svg";
 
-import activityLogo from '../assets/activity.svg';
-import reminderLogo from '../assets/reminder.svg';
-import reportLogo from '../assets/report.svg';
+import activityLogo from "../assets/activity.svg";
+import reminderLogo from "../assets/reminder.svg";
+import reportLogo from "../assets/report.svg";
 
 export const LEFT_MENU = [
   {
@@ -74,13 +74,13 @@ export const HOME_TABS = [
     id: "reminder",
     name: "Reminders",
     icon: reminderLogo,
-    bgColor: "bg-[#fff3d6]"
+    bgColor: "bg-[#fff3d6]",
   },
   {
     id: "recent-activity",
     name: "Recent Activity",
     icon: activityLogo,
-    bgColor: "bg-[#f2fbfb]"
+    bgColor: "bg-[#f2fbfb]",
   },
   // {
   //   id: "fund-raising",
@@ -92,6 +92,40 @@ export const HOME_TABS = [
     id: "latest-report",
     name: "Latest Reports",
     icon: reportLogo,
-    bgColor: "bg-[#FFDED1]"
-  }
-]
+    bgColor: "bg-[#FFDED1]",
+  },
+];
+
+export const QUATERLY_REPORT_ROWS_LIST = [
+  { id: "Committed_Capital", name: "Comitted Capital" },
+  { id: "Open_Capital_Account", name: "Opening Capital Account" },
+  { id: "Capital_Contribution", name: "Capital Contribution" },
+  { id: "Operating_Income", name: "Operating Income (Loss)" },
+  { id: "Investment_Gain_Realized", name: "Realized Investment Gain (Loss)" },
+  {
+    id: "Investment_Gain_Unrealized",
+    name: "Unrealized Investment Gain (Loss)",
+  },
+  {
+    id: "Net_Priority_Reallocation",
+    name: "Unrealized Investment Gain (Loss)",
+    showIfData: true,
+  },
+  {
+    id: "Restructuring_Reallocation",
+    name: "Restructuring Reallocation",
+    showIfData: true,
+  },
+  {
+    id: "Reallocation_Due_To_Excess_Fund_Investment",
+    name: "Reallocation Due To Excess Fund Investment",
+    showIfData: true,
+  },
+  { id: "Distributions", name: "Distributions" },
+  {
+    id: "LP_Transfer",
+    name: "LP Transfer",
+    showIfData: true,
+  },
+  { id: "Closing_Capital_Account", name: "Closing Capital Account" },
+];

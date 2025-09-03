@@ -14,7 +14,7 @@ export function getPeriodFromEventDate(eventDateStr: string): string {
   const eventDate = moment(eventDateStr, moment.ISO_8601, true);
 
   if (!eventDate.isValid()) {
-    return "Period";
+    return "-";
   }
 
   const diff = 12 - Math.abs((eventDate.month() + 1 - 12) % 12);
